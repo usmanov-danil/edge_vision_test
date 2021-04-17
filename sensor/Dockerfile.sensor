@@ -1,0 +1,9 @@
+FROM alpine:3.13.5
+
+RUN apk update && apk add bash curl jq 
+COPY . .
+
+
+RUN chmod u+x sensor_emulator.sh
+
+ENTRYPOINT ["bash", "sensor_emulator.sh"]

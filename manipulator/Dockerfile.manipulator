@@ -1,0 +1,11 @@
+FROM python:3.9.0-alpine
+
+ENV THRESHOLD=$THRESHOLD
+ENV HOST=$HOST
+ENV PORTPORT=$PORT
+
+
+COPY . .
+RUN mkdir log
+
+ENTRYPOINT ["python", "manipulator.py"]

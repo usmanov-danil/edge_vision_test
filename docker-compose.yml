@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+
+  manipulator:
+    build:
+      context: manipulator/
+      dockerfile: Dockerfile.manipulator
+    restart: always
+    environment:
+      - THRESHOLD=512
+      - HOST=manipulator
+      - PORT=63124
+    networks:
+      - edgevision
+
+  controller:
+    build:
+      context: controller/
+      dockerfile: Dockerfile.controller
+    restart: always
+    environment:
+      - THRESHOLD=512
+      - HOST=manipulator
+      - PORT=63124
+    networks:
+      - edgevision
+    depends_on:
+      - manipulator
+
+  sensor:
+    build:
+      context: sensor/
+      dockerfile: Dockerfile.sensor
+    restart: always
+    networks:
+      - edgevision
+    depends_on:
+      - controller
+
+networks:
+  edgevision:
